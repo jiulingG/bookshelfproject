@@ -1,0 +1,28 @@
+bookshelf:
+  books:
+  - title: gone with the wind
+    author: jane
+    publishingDate: "1919-2-10"
+    isbn: 484100
+  - title: gone with the wind
+    author: kkk
+    publishingDate: "1910-2-10"
+    isbn: 484101
+  - title: fly
+    author: jack
+    publishingDate: "1919-2-10"
+    isbn: 484102
+  - title: listener
+    author: kate
+    publishingDate: "1919-2-10"
+    isbn: 484103
+  trophies:
+  - type: one
+    name: fiona
+    year: 1990
+  - type: two
+    name: fye
+    year: 1991
+  stereo:
+    colour: black
+    speakers: 2
