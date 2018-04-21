@@ -1,0 +1,11 @@
+com\example\BookShelf.class
+com\example\ConfigurationModule.class
+com\example\BookShelfResource.class
+com\example\Stereo.class
+com\example\BookShelfApplication.class
+com\example\BookShelfService.class
+com\example\BookRepository.class
+com\example\BookShelfConfiguration.class
+com\example\Trophy.class
+com\example\Book.class
+com\example\RepositoryInterface.class

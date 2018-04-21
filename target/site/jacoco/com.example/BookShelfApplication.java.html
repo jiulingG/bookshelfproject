@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BookShelfApplication.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">dropwizard-core</a> &gt; <a href="index.source.html" class="el_package">com.example</a> &gt; <span class="el_source">BookShelfApplication.java</span></div><h1>BookShelfApplication.java</h1><pre class="source lang-java linenums">package com.example;
+
+import com.google.inject.Guice;
+import io.dropwizard.Application;
+import io.dropwizard.setup.Bootstrap;
+import io.dropwizard.setup.Environment;
+
+<span class="nc" id="L8">public class BookShelfApplication extends Application&lt;BookShelfConfiguration&gt; {</span>
+    public static void main(String[] args) throws Exception {
+<span class="nc" id="L10">        new BookShelfApplication().run(args);</span>
+
+<span class="nc" id="L12">    }</span>
+
+    @Override
+    public void initialize(Bootstrap&lt;BookShelfConfiguration&gt; bootstrap) {
+<span class="nc" id="L16">    }</span>
+
+    @Override
+    public void run(BookShelfConfiguration configuration, Environment environment) {
+
+//        Injector injector = makeInjector(configuration, environment); // write this function
+//        final BookShelfResource resource = new BookShelfResource(
+//                configuration.getBookShelf(), new BookShelfService(configuration, new BookRepository()));
+<span class="nc" id="L24">        environment.jersey().register(Guice.createInjector(new ConfigurationModule(configuration,</span>
+<span class="nc" id="L25">                new BookRepository(), environment)).getInstance(BookShelfResource.class));</span>
+//        environment.jersey().register(BookShelfResource.class);
+<span class="nc" id="L27">    }</span>
+
+//    private Injector makeInjector(BookShelfConfiguration configuration, Environment environment) {
+//        return Guice.createInjector();
+//    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

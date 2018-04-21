@@ -12,19 +12,27 @@ import java.util.List;
 public class BookShelfResource {
     private BookShelfConfiguration bookShelfConfiguration;
     private BookShelfService bookShelfService;
+    private SecondBookShelfService secondBookShelfService;
 
     @Inject
     public BookShelfResource(BookShelfConfiguration bookShelfConfiguration,
-                             BookShelfService bookShelfService) {
+                             BookShelfService bookShelfService,
+                             SecondBookShelfService secondBookShelfService) {
         this.bookShelfConfiguration = bookShelfConfiguration;
         this.bookShelfService = bookShelfService;
+        this.secondBookShelfService = secondBookShelfService;
     }
 
     @GET
     @Timed
-    public BookShelf getBookShelf() {
-        return bookShelfService.getUpdatedBookShelf();
+    public BookShelf getSecondBookShelf() {
+        return secondBookShelfService.getUpdatedBookShelf();
     }
+//    @GET
+//    @Timed
+//    public BookShelf getBookShelf() {
+//        return bookShelfService.getUpdatedBookShelf();
+//    }
 
     @GET
     @Timed
@@ -58,14 +66,14 @@ public class BookShelfResource {
 
         return books;
     }
+
     @GET
     @Timed
     @Path("/book/isbn/{isbn}")
     public Book getBookbyIsbn(@PathParam("isbn") Integer isbn) {
         Book book = bookShelfService.getBookbyIsbn(isbn);
 
-       if(book==null)
-        {
+        if (book == null) {
             throw new NotFoundException(" book is not found!");
         }
 
@@ -75,20 +83,25 @@ public class BookShelfResource {
     @PUT
     @Timed
     @Path("/book")
-    public void putBook(Book book) {
-        bookShelfService.putBook(book);
+    public void putBook( Book book) {
+
+            bookShelfService.putBook(book);
     }
 
     @POST
     @Timed
     @Path("/book/isbn/{isbn}")
-    public void postBookbyisbn(@PathParam("isbn") Integer isbn, Book book)
-    {
+    public void postBookbyisbn(@PathParam("isbn") Integer isbn, Book book) {
         try {
-            bookShelfService.postBookbyisbn(book);
-        }
-        catch (IllegalArgumentException e) {
-            throw new ForbiddenException("Book is exist");
+
+            bookShelfService.postBookbyisbn(isbn, book);
+        } catch (IllegalArgumentException e) {
+            if (e.getMessage().equals("The isbn is not equivalent")) {
+                throw new ClientErrorException(400);
+            }
+            if (e.getMessage().equalsIgnoreCase("Book is exist")) {
+                throw new NotAcceptableException("not acceptable");
+            }
         }
     }
 }

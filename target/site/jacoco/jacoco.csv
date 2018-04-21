@@ -1,0 +1,11 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+dropwizard-core,com.example,Book,3,24,0,0,1,9,1,4,1,4
+dropwizard-core,com.example,BookShelf,3,18,0,0,1,7,1,3,1,3
+dropwizard-core,com.example,BookShelfApplication,30,0,0,0,7,0,4,0,4,0
+dropwizard-core,com.example,BookShelfService,16,121,2,0,4,25,2,10,1,10
+dropwizard-core,com.example,BookShelfConfiguration,9,0,0,0,4,0,2,0,2,0
+dropwizard-core,com.example,Stereo,3,12,0,0,1,5,1,2,1,2
+dropwizard-core,com.example,ConfigurationModule,37,0,0,0,10,0,2,0,2,0
+dropwizard-core,com.example,BookRepository,30,0,2,0,8,0,4,0,3,0
+dropwizard-core,com.example,BookShelfResource,92,0,10,0,28,0,13,0,8,0
+dropwizard-core,com.example,Trophy,9,12,0,0,3,5,3,1,3,1

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BookShelfResource.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">dropwizard-core</a> &gt; <a href="index.source.html" class="el_package">com.example</a> &gt; <span class="el_source">BookShelfResource.java</span></div><h1>BookShelfResource.java</h1><pre class="source lang-java linenums">package com.example;
+
+import com.codahale.metrics.annotation.Timed;
+
+import javax.inject.Inject;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import java.util.List;
+
+@Path(&quot;/bookshelf&quot;)
+@Produces(MediaType.APPLICATION_JSON)
+public class BookShelfResource {
+    private BookShelfConfiguration bookShelfConfiguration;
+    private BookShelfService bookShelfService;
+
+    @Inject
+    public BookShelfResource(BookShelfConfiguration bookShelfConfiguration,
+<span class="nc" id="L18">                             BookShelfService bookShelfService) {</span>
+<span class="nc" id="L19">        this.bookShelfConfiguration = bookShelfConfiguration;</span>
+<span class="nc" id="L20">        this.bookShelfService = bookShelfService;</span>
+<span class="nc" id="L21">    }</span>
+
+    @GET
+    @Timed
+    public BookShelf getBookShelf() {
+<span class="nc" id="L26">        return bookShelfService.getUpdatedBookShelf();</span>
+    }
+
+    @GET
+    @Timed
+    @Path(&quot;/booklist&quot;)
+    public List&lt;Book&gt; getUpdatedBooks() {
+<span class="nc" id="L33">        return bookShelfService.getUpdatedBooks();</span>
+    }
+
+    @GET
+    @Timed
+    @Path(&quot;/book&quot;)
+    public List&lt;Book&gt; getBook(@QueryParam(&quot;name&quot;) String name) {
+<span class="nc" id="L40">        List&lt;Book&gt; books = bookShelfService.getBook(name);</span>
+
+<span class="nc bnc" id="L42" title="All 2 branches missed.">        if (books.isEmpty()) {</span>
+<span class="nc" id="L43">            throw new NotFoundException();</span>
+        }
+
+<span class="nc" id="L46">        return books;</span>
+    }
+
+    @GET
+    @Timed
+    @Path(&quot;/book/author/{bookAuthor}&quot;)
+    public List&lt;Book&gt; getBookbyAuthor(@PathParam(&quot;bookAuthor&quot;) String bookAuthor) {
+<span class="nc" id="L53">        List&lt;Book&gt; books = bookShelfService.getBooksByAuthor(bookAuthor);</span>
+
+<span class="nc bnc" id="L55" title="All 2 branches missed.">        if (books.isEmpty()) {</span>
+<span class="nc" id="L56">            throw new NotFoundException();</span>
+        }
+
+<span class="nc" id="L59">        return books;</span>
+    }
+
+    @GET
+    @Timed
+    @Path(&quot;/book/isbn/{isbn}&quot;)
+    public Book getBookbyIsbn(@PathParam(&quot;isbn&quot;) Integer isbn) {
+<span class="nc" id="L66">        Book book = bookShelfService.getBookbyIsbn(isbn);</span>
+
+<span class="nc bnc" id="L68" title="All 2 branches missed.">        if (book == null) {</span>
+<span class="nc" id="L69">            throw new NotFoundException(&quot; book is not found!&quot;);</span>
+        }
+
+<span class="nc" id="L72">        return book;</span>
+    }
+
+    @PUT
+    @Timed
+    @Path(&quot;/book&quot;)
+    public void putBook( Book book) {
+
+<span class="nc" id="L80">            bookShelfService.putBook(book);</span>
+<span class="nc" id="L81">    }</span>
+
+    @POST
+    @Timed
+    @Path(&quot;/book/isbn/{isbn}&quot;)
+    public void postBookbyisbn(@PathParam(&quot;isbn&quot;) Integer isbn, Book book) {
+        try {
+
+<span class="nc" id="L89">            bookShelfService.postBookbyisbn(isbn, book);</span>
+<span class="nc" id="L90">        } catch (IllegalArgumentException e) {</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">            if (e.getMessage().equals(&quot;The isbn is not equivalent&quot;)) {</span>
+<span class="nc" id="L92">                throw new ClientErrorException(400);</span>
+            }
+<span class="nc bnc" id="L94" title="All 2 branches missed.">            if (e.getMessage().equalsIgnoreCase(&quot;Book is exist&quot;)) {</span>
+<span class="nc" id="L95">                throw new NotAcceptableException(&quot;not acceptable&quot;);</span>
+            }
+<span class="nc" id="L97">        }</span>
+<span class="nc" id="L98">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
